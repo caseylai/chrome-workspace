@@ -27,9 +27,8 @@ define(['controllers/controllers'], function(controllers) {
 		})();
 
 		function preloadImages() {
-			var image = new Image();
 			for(var i = 1; i <= IMAGE_COUNT; i++) {
-				image.src = 'images/bg-' + i + '.jpg';
+				(new Image()).src = 'images/bg-' + i + '.jpg';
 			}
 		}
 

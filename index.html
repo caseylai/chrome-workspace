@@ -2,11 +2,11 @@
 <html>
 <head>
 	<meta charset='utf-8'>
-	<title>Casey's Chrome New Tab Page</title>	
+	<title>Casey's Chrome New Tab Page</title>
 	<link rel='stylesheet' href='css/app.css'>
 </head>
 <body ng-controller='WorkspaceController'>
-	
+
 	<div id='bg-container' ng-controller='BackgroundImageController'>
 		<div id='bg-bottom'></div>
 		<div id='bg-top'></div>
@@ -28,7 +28,7 @@
 				<ul id='bookmark-list'>
 					<li ng-repeat='bk in bookmark[selectedCategory] track by $index'>
 						<a href='{{bk.link}}' target='_blank' ng-bind='bk.title'></a>
-						<a class='close close-sm' href='javascript:;' title='删除' ng-click='removeBookmark($index)'>&times;</a>
+						<a class='close sm' href='javascript:;' title='删除' ng-click='removeBookmark($index)'>&times;</a>
 					</li>
 				</ul>
 			</div>
@@ -43,6 +43,27 @@
 		</div>
 	</div>
 
+	<div id='todo-dialog' class='dialog out' ng-controller='TodoController' setting='todo'>
+		<div class='dialog-header' draggable='#todo-dialog'>
+			<h4>待办事项</h4>
+			<a href='javascript:;' class='close' title='关闭'>&times;</a>
+		</div>
+		<div class='dialog-body'>
+			<input id='todo-input' type='text' placeholder='有什么事情是要做的？' ng-model='newTodo' ng-keypress='addTodo($event)'>
+			<ul id='todo-list'>
+				<li ng-repeat='todo in todos track by $index' ng-class='{done:todo.done}'>
+					<input type='checkbox' ng-checked='todo.done' ng-click='toggleDone(todo)'>
+					<span class='todo' ng-bind='todo.content'></span>
+					<a class='close' href='javascript:;' title='删除' ng-click='removeTodo($index)'>&times;</a>
+				</li>
+			</ul>
+		</div>
+		<div class='dialog-footer'>
+			<h4 ng-bind='todoLeft ? ("剩余 " + todoLeft + " 个待办事项") : ""'></h4>
+			<button ng-click='removeDone()'>删除已完成事项</button>
+		</div>
+	</div>
+
 	<ul id='icon-button-container' class='clearfix' ng-controller='ButtonListController'>
 		<li>
 			<a class='icon-export' href='javascript:;' title='导出工作空间数据' ng-click='exportWorkspace()'></a>
@@ -53,7 +74,7 @@
 			</a>
 		</li>
 	</ul>
-	
+
 	<script src='js/lib/require.min.js' data-main='js/app.js'></script>
 </body>
 </html>

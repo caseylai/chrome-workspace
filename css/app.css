@@ -1,3 +1,7 @@
+* {
+	box-sizing:border-box;
+}
+
 body {
 	font:14px 'Segoe UI','宋体';
 	color:#333;
@@ -14,15 +18,38 @@ a:hover {
 a.close {
 	color:#333;
 	font-size:18px;
+	text-align:center;
 }
 a.close:hover {
 	text-shadow:0 0 2px #333;
 }
-a.close.close-sm {
+a.close.sm {
 	font-size:14px;
 }
 
-input, button {
+h4 {
+	font-family:'Microsoft Yahei';
+	font-weight:normal;
+}
+
+ul {
+	padding:0;
+	margin:0;
+}
+li {
+	list-style:none;
+}
+
+input[type='checkbox']:focus {
+	outline:none;
+}
+input[type='text']:focus,
+input[type='url']:focus {
+	outline:solid 2px #08c;
+}
+input[type='text'],
+input[type='url'],
+button {
 	padding:5px;
 	border:solid 1px #ccc;
 	border-radius:5px;
@@ -68,29 +95,40 @@ button:hover {
 .dialog {
 	position:absolute;
 	z-index:10;
-	left:-9999px;
-	top:-9999px;
+	left:100px;
+	top:100px;
 	min-width:200px;
 	border-radius:5px;
+	background-color:rgba(239,242,196,.6);
 	box-shadow:0 3px 10px #666;
 }
-.dialog-header {
+.dialog-header,
+.dialog-footer {
 	display:table;
 	width:100%;
+}
+.dialog-header {
 	height:36px;
 	background-color:rgba(241,243,201,.8);
 	border-top-left-radius:5px;
 	border-top-right-radius:5px;
 }
+.dialog-footer {
+	height:48px;
+	border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px;
+	border-top:solid 1px #999;
+}
 .dialog-header h4,
+.dialog-footer h4,
 .dialog-header .close {
 	display:table-cell;
 	vertical-align:middle;
 	padding:0;
 	margin:0;
 }
-.dialog-header h4 {
-	font-weight:normal;
+.dialog-header h4,
+.dialog-footer h4 {
 	padding-left:10px;
 }
 .dialog-header .close {
@@ -100,9 +138,13 @@ button:hover {
 .dialog-body {
 	padding:10px;
 	border-top:solid 1px #ddd;
-	background-color:rgba(239,242,196,.6);
 	border-bottom-left-radius:5px;
 	border-bottom-right-radius:5px;
+}
+.dialog-footer button {
+	display:table-cell;
+	margin:10px 10px 10px 0;
+	float:right;
 }
 
 .icon-import {
@@ -146,13 +188,8 @@ a.fileSelector input[type='file'] {
 }
 
 #bookmark-category-list {
-	margin:0;
-	padding:0;
-	width:100px;
+	width:80px;
 	border-right:solid 1px #666;
-}
-#bookmark-category-list li {
-	list-style:none;
 }
 #bookmark-category-list li a {
 	display:block;
@@ -167,15 +204,11 @@ a.fileSelector input[type='file'] {
 	content: '- ';
 }
 #bookmark-category-list li.selected a::after {
-	content: ' -';
+	content: '　';
 }
 
 #bookmark-list {
-	margin:0 0 0 130px;
-	padding:0;
-}
-#bookmark-list li {
-	list-style:none;
+	margin-left:110px;
 }
 #bookmark-list li a {
 	display:inline-block;
@@ -198,11 +231,8 @@ a.fileSelector input[type='file'] {
 	right:0;
 	bottom:20px;
 	z-index:100;
-	padding:0;
-	margin:0;
 }
 #icon-button-container li {
-	list-style:none;
 	float:right;
 	margin-right:20px;
 }
@@ -218,3 +248,56 @@ a.fileSelector input[type='file'] {
 #icon-button-container li a:hover {
 	opacity:1;
 }
+
+
+#todo-dialog {
+	width:300px;
+}
+#todo-input {
+	width:100%;
+	height:36px;
+	padding:10px;
+	font:italic 14px 'Microsoft Yahei';
+}
+#todo-list li {
+	width:100%;
+	height:36px;
+	display:table;
+}
+#todo-list li > * {
+	display:table-cell;
+	vertical-align:middle;
+}
+#todo-list li input[type='checkbox'] {
+	height:100%;
+	-webkit-appearance:none;
+	opacity:0.2;
+	text-shadow:-1px -1px rgba(0,0,0,.2);
+	color:#333;
+	font-size:16px;
+}
+#todo-list li input[type='checkbox']:checked {
+	opacity:1;
+	text-shadow:none;
+	color:#08c;
+}
+#todo-list li input[type='checkbox']::after {
+	content:'✔';
+}
+#todo-list li span {
+	margin-left:10px;
+	width:215px;
+}
+#todo-list li a.close {
+	width:36px;
+	visibility:hidden;
+}
+#todo-list li:hover a.close {
+	visibility:visible;
+}
+#todo-list li.done span {
+	color:#666;
+	text-decoration:line-through;
+}
+
+
