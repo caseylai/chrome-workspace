@@ -1,4 +1,4 @@
-define(['controllers/controllers'], function(controllers) {
+define(['controllers/controllers', 'utils/utils'], function(controllers, utils) {
 
 	controllers.controller('BookmarkController', ['$scope', function($scope) {
 
@@ -22,6 +22,10 @@ define(['controllers/controllers'], function(controllers) {
 			$scope.bookmark[$scope.selectedCategory].splice(index, 1);
 		};
 
+		$scope.openLinks = function(links) {
+			links.forEach(utils.openWindow);
+		};
+
 	}]);
 
 
@@ -30,7 +34,7 @@ define(['controllers/controllers'], function(controllers) {
 		$scope.addBookmark = function() {
 			var item = {
 				title: $scope.title.trim(),
-				link: $scope.link.trim()
+				links: $scope.links.trim().split(/\s+/)
 			};
 			var category = $scope.category.trim();
 			if (category in $scope.bookmark) {
@@ -38,7 +42,7 @@ define(['controllers/controllers'], function(controllers) {
 			} else {
 				$scope.bookmark[category] = [item];
 			}
-			$scope.category = $scope.title = $scope.link = '';
+			$scope.category = $scope.title = $scope.links = '';
 		};
 
 	}]);

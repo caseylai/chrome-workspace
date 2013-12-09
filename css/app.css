@@ -26,6 +26,21 @@ a.close:hover {
 a.close.sm {
 	font-size:14px;
 }
+a.icon {
+	padding:5px;
+	width:26px;
+	height:26px;
+	display:inline-block;
+	background-position:center center;
+	background-repeat:no-repeat;
+}
+a.icon:hover {
+	border:solid 1px #999;
+	border-radius:3px;
+}
+a.icon-config {
+	background-image:url(../images/icon-config.png);
+}
 
 h4 {
 	font-family:'Microsoft Yahei';
@@ -44,19 +59,28 @@ input[type='checkbox']:focus {
 	outline:none;
 }
 input[type='text']:focus,
-input[type='url']:focus {
+input[type='url']:focus,
+input[type='number']:focus {
 	outline:solid 2px #08c;
+}
+input[type='text'].error,
+input[type='url'].error,
+input[type='number'].error {
+	outline:solid 2px red;
+	background-color:rgba(255,0,0,.7);
 }
 input[type='text'],
 input[type='url'],
+input[type='number'],
 button {
 	padding:5px;
-	border:solid 1px #ccc;
+	border:none;
 	border-radius:5px;
 }
 button {
 	padding:5px 10px;
 	cursor:pointer;
+	border:solid 1px #999;
 	transition:background-color .3s;
 }
 button.primary {
@@ -66,14 +90,36 @@ button.primary {
 button.primary:hover {
 	background-color:#006090;
 }
-
-button:hover {
-	box-shadow:0 2px 5px #ccc;
+button.danger {
+	background-color:red;
+	color:white;
+}
+button.danger:hover {
+	background-color:#c40027;
+}
+button[disabled] {
+	cursor:not-allowed;
+	color:#999;
 }
 
-.left {
-	float:left;
+label {
+	margin-right:20px;
 }
+label input {
+	margin-left:3px;
+}
+label span.help {
+	margin-left:10px;
+	font-size:12px;
+	color:#666;
+}
+
+
+
+.left {float:left;}
+.right {float:right;}
+.text-center {text-align:center;}
+.text-right {text-align:right;}
 
 .clearfix:after{
 	content:".";
@@ -83,6 +129,11 @@ button:hover {
 	visibility:hidden;
 }
 .clearfix{*+height:1%;}
+
+.row {
+	display:block;
+	padding:5px 0;
+}
 
 .moveable {
 	cursor:move;
@@ -185,6 +236,8 @@ a.fileSelector input[type='file'] {
 
 #bookmark-dialog {
 	width:400px;
+	left:100px;
+	top:100px;
 }
 
 #bookmark-category-list {
@@ -199,12 +252,6 @@ a.fileSelector input[type='file'] {
 #bookmark-category-list li.selected a {
 	color:#333;
 	cursor:text;
-}
-#bookmark-category-list li.selected a::before {
-	content: '- ';
-}
-#bookmark-category-list li.selected a::after {
-	content: '　';
 }
 
 #bookmark-list {
@@ -252,6 +299,8 @@ a.fileSelector input[type='file'] {
 
 #todo-dialog {
 	width:300px;
+	left:600px;
+	top:100px;
 }
 #todo-input {
 	width:100%;
@@ -301,3 +350,43 @@ a.fileSelector input[type='file'] {
 }
 
 
+#pomorodo-dialog {
+	width:490px;
+}
+#pomorodo-clock {
+	width:145px;
+	height:105px;
+	float:left;
+	box-shadow:0 0 5px #ccc;
+	background-color:rgba(255,255,255,.5);
+	font:bold 36px/110px Arial;
+	text-align:center;
+	color:rgba(255,255,255,.6);
+	text-shadow:-1px -1px rgba(0,0,0,.7);
+}
+#pomorodo-clock span {
+
+}
+#setup-pomorodo {
+	float:left;
+	width:300px;
+	margin-left:20px;
+}
+#setup-pomorodo input[name='goal'] {
+	width:250px;
+}
+#pomorodo-config-btn {
+	margin-left:-5px;
+}
+#pomorodo-config-container {
+	margin-top:10px;
+}
+#pomorodo-config-validation {
+	font-size:12px;
+	height:28px;
+	line-height:28px;
+	color:red;
+}
+#pomorodo-status {
+	font-size:12px;
+}

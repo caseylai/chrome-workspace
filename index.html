@@ -27,16 +27,16 @@
 				</ul>
 				<ul id='bookmark-list'>
 					<li ng-repeat='bk in bookmark[selectedCategory] track by $index'>
-						<a href='{{bk.link}}' target='_blank' ng-bind='bk.title'></a>
+						<a href='javascript:;' ng-bind='bk.title' ng-click='openLinks(bk.links)'></a>
 						<a class='close sm' href='javascript:;' title='删除' ng-click='removeBookmark($index)'>&times;</a>
 					</li>
 				</ul>
 			</div>
 			<div id='add-bookmark-container'>
 				<form name='addBookmarkForm' ng-controller='AddBookmarkController' ng-submit='addBookmark()'>
-					<input type='text' name='category' ng-model='category' size='5' placeholder='分类' required>
-					<input type='text' name='title' ng-model='title' size='10' placeholder='显示名称' required>
-					<input type='url' name='link' ng-model='link' size='18' placeholder='链接' required>
+					<input type='text' name='category' ng-model='category' size='4' placeholder='分类' required>
+					<input type='text' name='title' ng-model='title' size='8' placeholder='显示名称' required>
+					<input type='text' name='links' ng-model='links' size='21' placeholder='链接，多个链接用空格分隔' required>
 					<button class='primary' title='添加书签'>+</button>
 				</form>
 			</div>
@@ -59,8 +59,93 @@
 			</ul>
 		</div>
 		<div class='dialog-footer'>
-			<h4 ng-bind='todoLeft ? ("剩余 " + todoLeft + " 个待办事项") : ""'></h4>
-			<button ng-click='removeDone()'>删除已完成事项</button>
+			<h4 ng-show='todoLeft' ng-bind='"剩余 " + todoLeft + " 个待办事项"'></h4>
+			<button ng-disabled='! todoLeft' ng-click='removeDone()'>删除已完成事项</button>
+		</div>
+	</div>
+
+	<div id='pomorodo-dialog' class='dialog out' ng-controller='PomorodoController' setting='pomorodo'>
+		<div class='dialog-header' draggable='#pomorodo-dialog'>
+			<h4>番茄工作一下！</h4>
+			<a href='javascript:;' class='close' title='关闭'>&times;</a>
+		</div>
+		<div class='dialog-body'>
+			<div class='clearfix'>
+				<div id='pomorodo-clock'>
+					<span class='minute' ng-bind='minuteShow || "00"'></span>
+					:
+					<span class='second' ng-bind='secondShow || "00"'></span>
+				</div>
+				<div id='setup-pomorodo'>
+					<form name='pomorodoForm'>
+						<div class='row'>
+							<label>
+								目　标
+								<input type='text' name='goal' ng-model='pomorodo.goal' ng-readonly='pomorodo.beginTime' title='明确你的目标，确定可以在番茄时间内完成。' required>
+							</label>
+						</div>
+						<div class='row'>
+							<label>
+								番茄数
+								<input type='number' name='count' ng-model='pomorodo.count' ng-readonly='pomorodo.beginTime' min='1' max='4' required>
+								<span class='help' ng-bind='workloadStat()'></span>
+							</label>
+						</div>
+						<div class='clearfix'>
+							<a id='pomorodo-config-btn' href='javascript:;' class='left icon icon-config' title='参数设置' ng-click='toggleConfig()' ng-show='! pomorodo.beginTime'></a>
+							<button ng-show='! pomorodo.beginTime' class='primary right' ng-click='create()' type='submit'>开始</button>
+							<button ng-show='pomorodo.beginTime' class='danger right' ng-click='clear()' title='番茄时间不能中断。如果停止，那么番茄时间将作废，必须重新开始。'>停止</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id='pomorodo-status' ng-bind='status'></div>
+			<div id='pomorodo-config-container' ng-show='showConfig && ! pomorodo.beginTime'>
+				<hr>
+				<form name='pomorodoConfigForm'>
+					<div class='row'>
+						<label>
+							单次番茄时间
+							<input type='number' name='eachPomorodoTime' ng-model='config.eachPomorodoTime' min='1' max='60' required ng-class='{error:pomorodoConfigForm.eachPomorodoTime.$invalid}'>
+							分钟
+							<span class='help'>完成一个任务的时间，在15到60之间。</span>
+						</label>
+					</div>
+					<div class='row'>
+						<label>
+							短休息时长　
+							<input type='number' name='shortRelaxTime' ng-model='config.shortRelaxTime' min='1' max='15' required ng-class='{error:pomorodoConfigForm.shortRelaxTime.$invalid}'>
+							分钟
+							<span class='help'>完成一个番茄后的休息时间，在5到15之间。</span>
+						</label>
+					</div>
+					<div class='row'>
+						<label>
+							长休息时长　
+							<input type='number' name='longRelaxTime' ng-model='config.longRelaxTime' min='1' max='40' required ng-class='{error:pomorodoConfigForm.longRelaxTime.$invalid}'>
+							分钟
+							<span class='help'>完成四个番茄后的休息时间，在15到40之间。</span>
+						</label>
+					</div>
+					<div class='row'>
+						<label>
+							<input type='checkbox' name='enable-sound-notification' ng-model='config.enableSoundNotification'>
+							启用声音提醒
+						</label>
+						<label>
+							<input type='checkbox' name='enable-popup-notification' ng-model='config.enablePopupNotification' ng-change='checkNotificationPermission()'>
+							启用桌面通知提醒
+						</label>
+					</div>
+					<div class='row clearfix'>
+						<span id='pomorodo-config-validation' class='left' ng-show='pomorodoConfigForm.$invalid'>请输入合法值。</span>
+						<button class='primary right' ng-click='toggleConfig()'>关闭</button>
+						<button class='right' ng-click='resetConfig()'>恢复到标准设置</button>
+					</div>
+					<audio id='audio-pomorodo-switch' src='audios/pomorodo-switch.mp3' preload='auto'></audio>
+					<audio id='audio-pomorodo-done' src='audios/pomorodo-done.mp3' preload='auto'></audio>
+				</form>
+			</div>
 		</div>
 	</div>
 

@@ -9,10 +9,9 @@ define(['directives/directives'], function(directives) {
 				var setting = scope.workspace.settings[which];
 				if (setting.position) {
 					e.css(setting.position);
-					e.removeClass('out');
 				}
 			}
-
+			e.removeClass('out');
 		};
 
 	}]);

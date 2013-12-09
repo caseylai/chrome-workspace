@@ -6,5 +6,7 @@
 	"chrome_url_overrides": {
 		"newtab": "index.html"
 	},
-	"permissions": [] 
+	"permissions": ["tabs", "notifications"],
+	"web_accessible_resources": ["icon-pomorodo-48.png"],
+	"content_security_policy": "script-src 'unsafe-eval'; object-src 'self'"
 }
