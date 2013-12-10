@@ -106,7 +106,7 @@
 					<div class='row'>
 						<label>
 							单次番茄时间
-							<input type='number' name='eachPomorodoTime' ng-model='config.eachPomorodoTime' min='1' max='60' required ng-class='{error:pomorodoConfigForm.eachPomorodoTime.$invalid}'>
+							<input type='number' name='eachPomorodoTime' ng-model='config.eachPomorodoTime' min='15' max='60' required ng-class='{error:pomorodoConfigForm.eachPomorodoTime.$invalid}'>
 							分钟
 							<span class='help'>完成一个任务的时间，在15到60之间。</span>
 						</label>
@@ -114,7 +114,7 @@
 					<div class='row'>
 						<label>
 							短休息时长　
-							<input type='number' name='shortRelaxTime' ng-model='config.shortRelaxTime' min='1' max='15' required ng-class='{error:pomorodoConfigForm.shortRelaxTime.$invalid}'>
+							<input type='number' name='shortRelaxTime' ng-model='config.shortRelaxTime' min='5' max='15' required ng-class='{error:pomorodoConfigForm.shortRelaxTime.$invalid}'>
 							分钟
 							<span class='help'>完成一个番茄后的休息时间，在5到15之间。</span>
 						</label>
@@ -122,7 +122,7 @@
 					<div class='row'>
 						<label>
 							长休息时长　
-							<input type='number' name='longRelaxTime' ng-model='config.longRelaxTime' min='1' max='40' required ng-class='{error:pomorodoConfigForm.longRelaxTime.$invalid}'>
+							<input type='number' name='longRelaxTime' ng-model='config.longRelaxTime' min='15' max='40' required ng-class='{error:pomorodoConfigForm.longRelaxTime.$invalid}'>
 							分钟
 							<span class='help'>完成四个番茄后的休息时间，在15到40之间。</span>
 						</label>
