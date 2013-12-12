@@ -5,7 +5,7 @@ define(['controllers/controllers', 'utils/utils'], function(controllers, utils) 
 		$scope.search = function() {
 			var q = $scope.query.trim();
 			if (q) {
-				if (/^\w+(\.\w+)+$/.test(q)) {
+				if (/^\w+(\.\w+)+(\/[\w\-]*)*$/.test(q)) {
 					utils.openWindow('http://' + q);
 				} else {
 					utils.openWindow('https://www.google.com.hk/search?q=' + q);
