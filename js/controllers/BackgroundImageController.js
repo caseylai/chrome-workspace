@@ -1,6 +1,6 @@
 define(['controllers/controllers'], function(controllers) {
 
-	controllers.controller('BackgroundImageController', [function() {
+	controllers.controller('BackgroundImageController', ['$interval', function($interval) {
 
 		var IMAGE_COUNT = 7;
 		var bgTop = angular.element('#bg-top');
@@ -22,7 +22,7 @@ define(['controllers/controllers'], function(controllers) {
 			if (firstShow) {
 				preloadImages();
 				firstShow = false;
-				setInterval(arguments.callee, 60 * 1000);
+				$interval(arguments.callee, 60 * 1000);
 			}
 		})();
 

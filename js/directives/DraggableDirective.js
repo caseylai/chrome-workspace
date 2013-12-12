@@ -8,6 +8,7 @@ define(['directives/directives'], function(directives) {
 
 			e.on('mousedown', function(event) {
 				e.addClass('moveable');
+				draggable.addClass('moving');
 				var sx = parseInt(draggable.css('left')),
 					sy = parseInt(draggable.css('top'));
 				var mx = event.clientX,
@@ -22,6 +23,7 @@ define(['directives/directives'], function(directives) {
 					})
 					.one('mouseup', function() {
 						body.off('mousemove');
+						draggable.removeClass('moving');
 						e.removeClass('moveable');
 						var settingName = draggable.attr('setting');
 						if (settingName) {

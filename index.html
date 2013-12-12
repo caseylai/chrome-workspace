@@ -12,10 +12,10 @@
 		<div id='bg-top'></div>
 	</div>
 
-	<div id='bookmark-dialog' class='dialog out' ng-controller='BookmarkController' setting='bookmark'>
+	<div id='bookmark-dialog' class='dialog out' ng-controller='BookmarkController' setting='bookmark' ng-show='getSetting("bookmark", "visible")'>
 		<div class='dialog-header' draggable='#bookmark-dialog'>
 			<h4>书签</h4>
-			<a href='javascript:;' class='close' title='关闭'>&times;</a>
+			<a href='javascript:;' class='close' title='关闭' ng-click='addSetting("bookmark", "visible", false);'>&times;</a>
 		</div>
 		<div class='dialog-body'>
 			<div class='clearfix'>
@@ -43,10 +43,10 @@
 		</div>
 	</div>
 
-	<div id='todo-dialog' class='dialog out' ng-controller='TodoController' setting='todo'>
+	<div id='todo-dialog' class='dialog out' ng-controller='TodoController' setting='todo' ng-show='getSetting("todo", "visible")'>
 		<div class='dialog-header' draggable='#todo-dialog'>
 			<h4>待办事项</h4>
-			<a href='javascript:;' class='close' title='关闭'>&times;</a>
+			<a href='javascript:;' class='close' title='关闭' ng-click='addSetting("todo", "visible", false);'>&times;</a>
 		</div>
 		<div class='dialog-body'>
 			<input id='todo-input' type='text' placeholder='有什么事情是要做的？' ng-model='newTodo' ng-keypress='addTodo($event)'>
@@ -64,10 +64,10 @@
 		</div>
 	</div>
 
-	<div id='pomorodo-dialog' class='dialog out' ng-controller='PomorodoController' setting='pomorodo'>
+	<div id='pomorodo-dialog' class='dialog out' ng-controller='PomorodoController' setting='pomorodo' ng-show='getSetting("pomorodo", "visible")'>
 		<div class='dialog-header' draggable='#pomorodo-dialog'>
 			<h4>番茄工作一下！</h4>
-			<a href='javascript:;' class='close' title='关闭'>&times;</a>
+			<a href='javascript:;' class='close' title='关闭' ng-click='addSetting("pomorodo", "visible", false);'>&times;</a>
 		</div>
 		<div class='dialog-body'>
 			<div class='clearfix'>
@@ -149,16 +149,76 @@
 		</div>
 	</div>
 
-	<ul id='icon-button-container' class='clearfix' ng-controller='ButtonListController'>
-		<li>
-			<a class='icon-export' href='javascript:;' title='导出工作空间数据' ng-click='exportWorkspace()'></a>
-		</li>
-		<li>
-			<a class='icon-import fileSelector' href='javascript:;' title='导入工作空间数据'>
-				<file read-as='text' handler='importWorkspace'>
-			</a>
-		</li>
-	</ul>
+	<div id='neteaseNews-dialog' class='dialog out' ng-controller='NeteaseNewsController' setting='neteaseNews' ng-show='getSetting("neteaseNews", "visible")'>
+		<div class='dialog-header' draggable='#neteaseNews-dialog'>
+			<h4>网易新闻</h4>
+			<a href='javascript:;' class='close' title='关闭' ng-click='addSetting("neteaseNews", "visible", false);'>&times;</a>
+		</div>
+		<div class='dialog-body'>
+			<div class='clearfix'>
+				<div ng-show='! neteaseNews.length' ng-bind='"目前还没有RSS，请在下面的表单处添加。"'></div>
+				<ul class='news-rss-list left'>
+					<li ng-repeat='news in neteaseNews' ng-class='{selected: selectedIndex == $index}'>
+						<a href='javascript:;' ng-bind='news.category' ng-click='selectIndex($index)'></a>
+					</li>
+				</ul>
+				<ul class='news-list'>
+					<li ng-repeat='item in neteaseNews[selectedIndex].items'>
+						<a class='text-overflow' href='{{item.link}}' ng-bind='item.title' target='_blank'></a>
+					</li>
+				</ul>
+				<div class='update-time text-right' ng-bind='"更新于 " + (lastUpdateTime | date:"H:mm")'></div>
+			</div>
+			<div id='add-news-rss-container'>
+				<form name='AddNewsRSSContainer'>
+					<input type='text' name='category' ng-model='newCategory' size='6' placeholder='RSS名称' required>
+					<input type='text' name='address' ng-model='newRSSAddress' size='36' placeholder='RSS地址' required>
+					<button class='primary' title='添加RSS' ng-click='addRSS()'>+</button>
+				</form>
+				<button title='刷新新闻' ng-click='updateAll()'>刷新</button>
+			</div>
+		</div>
+	</div>
+
+	<div id='googleSearch-dialog' class='dialog out' ng-controller='SearchController' setting='googleSearch' ng-show='getSetting("googleSearch", "visible")'>
+		<div class='dialog-header' draggable='#googleSearch-dialog'>
+			<h4>Google 搜索</h4>
+			<a href='javascript:;' class='close' title='关闭' ng-click='addSetting("googleSearch", "visible", false);'>&times;</a>
+		</div>
+		<div class='dialog-body'>
+			<form name='searchForm' ng-submit='search()'>
+				<input type='text' name='q' ng-model='query' placeholder='搜索什么？' autocomplete autofocus>
+			</form>
+		</div>
+	</div>
+
+	<div id='icon-button-container'>
+		<ul id='icon-buttons' class='clearfix' ng-controller='ButtonListController'>
+			<li>
+				<a class='icon-google' href='javascript:;' title='Google 搜索' ng-click='showDialog("googleSearch")'></a>
+			</li>
+			<li>
+				<a class='icon-bookmark' href='javascript:;' title='书签' ng-click='showDialog("bookmark")'></a>
+			</li>
+			<li>
+				<a class='icon-todo' href='javascript:;' title='待办任务' ng-click='showDialog("todo")'></a>
+			</li>
+			<li>
+				<a class='icon-pomorodo' href='javascript:;' title='番茄工作' ng-click='showDialog("pomorodo")'></a>
+			</li>
+			<li>
+				<a class='icon-netease' href='javascript:;' title='网易新闻' ng-click='showDialog("neteaseNews")'></a>
+			</li>
+			<li>
+				<a class='icon-export' href='javascript:;' title='导出工作空间数据' ng-click='exportWorkspace()'></a>
+			</li>
+			<li>
+				<a class='icon-import fileSelector' href='javascript:;' title='导入工作空间数据'>
+					<file read-as='text' handler='importWorkspace'>
+				</a>
+			</li>
+		</ul>
+	</div>
 
 	<script src='js/lib/require.min.js' data-main='js/app.js'></script>
 </body>

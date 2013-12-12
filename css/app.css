@@ -121,6 +121,13 @@ label span.help {
 .text-center {text-align:center;}
 .text-right {text-align:right;}
 
+.text-overflow {
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+	width:100%;
+}
+
 .clearfix:after{
 	content:".";
 	display:block;
@@ -150,8 +157,11 @@ label span.help {
 	top:100px;
 	min-width:200px;
 	border-radius:5px;
-	background-color:rgba(239,242,196,.6);
+	background-color:rgba(239,242,196,.7);
 	box-shadow:0 3px 10px #666;
+}
+.dialog.moving {
+	z-index:20;
 }
 .dialog-header,
 .dialog-footer {
@@ -204,6 +214,21 @@ label span.help {
 .icon-export {
 	background-image:url(../images/icon-export.png);
 }
+.icon-google {
+	background-image:url(../images/icon-google.png);
+}
+.icon-bookmark {
+	background-image:url(../images/icon-bookmark.png);
+}
+.icon-todo {
+	background-image:url(../images/icon-todo.png);
+}
+.icon-pomorodo {
+	background-image:url(../images/icon-pomorodo.png);
+}
+.icon-netease {
+	background-image:url(../images/icon-netease.png);
+}
 a.fileSelector {
 	overflow:hidden;
 	position:relative;
@@ -239,7 +264,6 @@ a.fileSelector input[type='file'] {
 	left:100px;
 	top:100px;
 }
-
 #bookmark-category-list {
 	width:80px;
 	border-right:solid 1px #666;
@@ -272,30 +296,6 @@ a.fileSelector input[type='file'] {
 #add-bookmark-container {
 	margin-top:40px;
 }
-
-#icon-button-container {
-	position:absolute;
-	right:0;
-	bottom:20px;
-	z-index:100;
-}
-#icon-button-container li {
-	float:right;
-	margin-right:20px;
-}
-#icon-button-container li a {
-	display:block;
-	width:64px;
-	height:64px;
-	background-repeat:no-repeat;
-	background-position:center center;
-	opacity:.4;
-	transition:opacity .3s;
-}
-#icon-button-container li a:hover {
-	opacity:1;
-}
-
 
 #todo-dialog {
 	width:300px;
@@ -389,4 +389,89 @@ a.fileSelector input[type='file'] {
 }
 #pomorodo-status {
 	font-size:12px;
+}
+
+
+#neteaseNews-dialog {
+	width:460px;
+	left:100px;
+	top:100px;
+}
+#neteaseNews-dialog .news-rss-list {
+	width:80px;
+	border-right:solid 1px #666;
+}
+#neteaseNews-dialog .news-rss-list li a {
+	display:block;
+	padding:10px 0;
+	text-align:center;
+}
+#neteaseNews-dialog .news-rss-list li.selected a {
+	color:#333;
+	cursor:text;
+}
+#neteaseNews-dialog .news-list {
+	margin-left:110px;
+	max-height:350px;
+	overflow-y:auto;
+}
+#neteaseNews-dialog .news-list li a {
+	display:inline-block;
+	padding:5px 0;
+}
+#neteaseNews-dialog .news-list li a:visited {
+	color:gray;
+}
+#neteaseNews-dialog .update-time {
+	margin-top:10px;
+	font:12px 'verdana';
+}
+#add-news-rss-container {
+	margin-top:30px;
+}
+#add-news-rss-container form {
+	display:inline;
+}
+#neteaseNews-dialog .news-list::-webkit-scrollbar-track-piece{background-color:#fff;}
+#neteaseNews-dialog .news-list::-webkit-scrollbar{width:5px;}
+#neteaseNews-dialog .news-list::-webkit-scrollbar-thumb{background:#08c;}
+
+
+#googleSearch-dialog {
+	width:400px;
+}
+#googleSearch-dialog input[name='q'] {
+	width:100%;
+	font:24px 'Microsoft Yahei';
+	padding:10px;
+}
+
+
+
+
+#icon-button-container {
+	position:absolute;
+	z-index:100;
+	left:50%;
+	bottom:10px;
+}
+#icon-buttons {
+	position:relative;
+	left:-50%;
+}
+#icon-buttons li {
+	float:left;
+	margin:0 10px;
+}
+#icon-buttons li a {
+	display:block;
+	width:48px;
+	height:48px;
+	background-repeat:no-repeat;
+	background-position:center center;
+	opacity:.4;
+	transition:opacity .3s;
+}
+#icon-buttons li a:hover {
+	opacity:1;
 }
