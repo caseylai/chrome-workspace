@@ -91,11 +91,11 @@ button.primary:hover {
 	background-color:#006090;
 }
 button.danger {
-	background-color:red;
-	color:white;
+
 }
 button.danger:hover {
-	background-color:#c40027;
+	background-color:red;
+	color:white;
 }
 button[disabled] {
 	cursor:not-allowed;
@@ -226,8 +226,8 @@ label span.help {
 .icon-pomorodo {
 	background-image:url(../images/icon-pomorodo.png);
 }
-.icon-netease {
-	background-image:url(../images/icon-netease.png);
+.icon-rss {
+	background-image:url(../images/icon-rss.png);
 }
 a.fileSelector {
 	overflow:hidden;
@@ -235,9 +235,9 @@ a.fileSelector {
 }
 a.fileSelector input[type='file'] {
 	position:absolute;
-	left:-360px;
+	left:-320px;
 	top:0;
-	font-size:20px;
+	font-size:30px;
 	opacity:0;
 	cursor:pointer;
 }
@@ -392,38 +392,41 @@ a.fileSelector input[type='file'] {
 }
 
 
-#neteaseNews-dialog {
+#news-dialog {
 	width:460px;
 	left:100px;
 	top:100px;
 }
-#neteaseNews-dialog .news-rss-list {
+#news-dialog .news-rss-list {
 	width:80px;
 	border-right:solid 1px #666;
 }
-#neteaseNews-dialog .news-rss-list li a {
+#news-dialog .news-rss-list li a {
 	display:block;
 	padding:10px 0;
 	text-align:center;
 }
-#neteaseNews-dialog .news-rss-list li.selected a {
+#news-dialog .news-rss-list li.selected a {
 	color:#333;
 	cursor:text;
 }
-#neteaseNews-dialog .news-list {
+#news-dialog .news-list {
 	margin-left:110px;
-	max-height:350px;
+	max-height:420px;
 	overflow-y:auto;
 }
-#neteaseNews-dialog .news-list li a {
+#news-dialog .news-list li a {
 	display:inline-block;
 	padding:5px 0;
 }
-#neteaseNews-dialog .news-list li a:visited {
+#news-dialog .news-list li a:visited {
 	color:gray;
 }
-#neteaseNews-dialog .update-time {
+#news-dialog .news-status {
 	margin-top:10px;
+}
+#news-dialog .update-time {
+	display:inline;
 	font:12px 'verdana';
 }
 #add-news-rss-container {
@@ -432,9 +435,9 @@ a.fileSelector input[type='file'] {
 #add-news-rss-container form {
 	display:inline;
 }
-#neteaseNews-dialog .news-list::-webkit-scrollbar-track-piece{background-color:#fff;}
-#neteaseNews-dialog .news-list::-webkit-scrollbar{width:5px;}
-#neteaseNews-dialog .news-list::-webkit-scrollbar-thumb{background:#08c;}
+#news-dialog .news-list::-webkit-scrollbar-track-piece{background-color:#fff;}
+#news-dialog .news-list::-webkit-scrollbar{width:5px;}
+#news-dialog .news-list::-webkit-scrollbar-thumb{background:#08c;}
 
 
 #googleSearch-dialog {

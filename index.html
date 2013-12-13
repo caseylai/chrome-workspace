@@ -106,7 +106,7 @@
 					<div class='row'>
 						<label>
 							单次番茄时间
-							<input type='number' name='eachPomorodoTime' ng-model='config.eachPomorodoTime' min='15' max='60' required ng-class='{error:pomorodoConfigForm.eachPomorodoTime.$invalid}'>
+							<input type='number' name='eachPomorodoTime' ng-model='config.eachPomorodoTime' ng-change='saveConfig()' min='15' max='60' required ng-class='{error:pomorodoConfigForm.eachPomorodoTime.$invalid}'>
 							分钟
 							<span class='help'>完成一个任务的时间，在15到60之间。</span>
 						</label>
@@ -114,7 +114,7 @@
 					<div class='row'>
 						<label>
 							短休息时长　
-							<input type='number' name='shortRelaxTime' ng-model='config.shortRelaxTime' min='5' max='15' required ng-class='{error:pomorodoConfigForm.shortRelaxTime.$invalid}'>
+							<input type='number' name='shortRelaxTime' ng-model='config.shortRelaxTime' ng-change='saveConfig()' min='5' max='15' required ng-class='{error:pomorodoConfigForm.shortRelaxTime.$invalid}'>
 							分钟
 							<span class='help'>完成一个番茄后的休息时间，在5到15之间。</span>
 						</label>
@@ -122,14 +122,14 @@
 					<div class='row'>
 						<label>
 							长休息时长　
-							<input type='number' name='longRelaxTime' ng-model='config.longRelaxTime' min='15' max='40' required ng-class='{error:pomorodoConfigForm.longRelaxTime.$invalid}'>
+							<input type='number' name='longRelaxTime' ng-model='config.longRelaxTime' ng-change='saveConfig()' min='15' max='40' required ng-class='{error:pomorodoConfigForm.longRelaxTime.$invalid}'>
 							分钟
 							<span class='help'>完成四个番茄后的休息时间，在15到40之间。</span>
 						</label>
 					</div>
 					<div class='row'>
 						<label>
-							<input type='checkbox' name='enable-sound-notification' ng-model='config.enableSoundNotification'>
+							<input type='checkbox' name='enable-sound-notification' ng-model='config.enableSoundNotification' ng-change='saveConfig()'>
 							启用声音提醒
 						</label>
 						<label>
@@ -149,33 +149,37 @@
 		</div>
 	</div>
 
-	<div id='neteaseNews-dialog' class='dialog out' ng-controller='NeteaseNewsController' setting='neteaseNews' ng-show='getSetting("neteaseNews", "visible")'>
-		<div class='dialog-header' draggable='#neteaseNews-dialog'>
-			<h4>网易新闻</h4>
-			<a href='javascript:;' class='close' title='关闭' ng-click='addSetting("neteaseNews", "visible", false);'>&times;</a>
+	<div id='news-dialog' class='dialog out' ng-controller='NewsController' setting='news' ng-show='getSetting("news", "visible")'>
+		<div class='dialog-header' draggable='#news-dialog'>
+			<h4>新闻RSS</h4>
+			<a href='javascript:;' class='close' title='关闭' ng-click='addSetting("news", "visible", false);'>&times;</a>
 		</div>
 		<div class='dialog-body'>
 			<div class='clearfix'>
-				<div ng-show='! neteaseNews.length' ng-bind='"目前还没有RSS，请在下面的表单处添加。"'></div>
+				<div ng-show='! news.length' ng-bind='"目前还没有RSS，请在下面的表单处添加。"'></div>
 				<ul class='news-rss-list left'>
-					<li ng-repeat='news in neteaseNews' ng-class='{selected: selectedIndex == $index}'>
+					<li ng-repeat='news in news' ng-class='{selected: selectedIndex == $index}'>
 						<a href='javascript:;' ng-bind='news.category' ng-click='selectIndex($index)'></a>
 					</li>
 				</ul>
 				<ul class='news-list'>
-					<li ng-repeat='item in neteaseNews[selectedIndex].items'>
-						<a class='text-overflow' href='{{item.link}}' ng-bind='item.title' target='_blank'></a>
+					<li ng-repeat='item in news[selectedIndex].items'>
+						<a class='text-overflow' href='{{item.link}}' title='{{item.title}}' ng-bind='item.title' target='_blank'></a>
 					</li>
 				</ul>
-				<div class='update-time text-right' ng-bind='"更新于 " + (lastUpdateTime | date:"H:mm")'></div>
+				<div class='news-status text-right'>
+					<button class='danger' title='删除当前选择的RSS' ng-click='removeSelectedRSS()'>删除当前RSS</button>
+					<button title='刷新新闻' ng-click='updateAll()'>刷新</button>
+					<div class='update-time' ng-bind='"更新于 " + (lastUpdateTime | date:"H:mm")'></div>
+				</div>
+
 			</div>
 			<div id='add-news-rss-container'>
 				<form name='AddNewsRSSContainer'>
 					<input type='text' name='category' ng-model='newCategory' size='6' placeholder='RSS名称' required>
-					<input type='text' name='address' ng-model='newRSSAddress' size='36' placeholder='RSS地址' required>
+					<input type='text' name='address' ng-model='newRSSAddress' size='45' placeholder='RSS地址' required>
 					<button class='primary' title='添加RSS' ng-click='addRSS()'>+</button>
 				</form>
-				<button title='刷新新闻' ng-click='updateAll()'>刷新</button>
 			</div>
 		</div>
 	</div>
@@ -207,7 +211,7 @@
 				<a class='icon-pomorodo' href='javascript:;' title='番茄工作' ng-click='showDialog("pomorodo")'></a>
 			</li>
 			<li>
-				<a class='icon-netease' href='javascript:;' title='网易新闻' ng-click='showDialog("neteaseNews")'></a>
+				<a class='icon-rss' href='javascript:;' title='新闻RSS' ng-click='showDialog("news")'></a>
 			</li>
 			<li>
 				<a class='icon-export' href='javascript:;' title='导出工作空间数据' ng-click='exportWorkspace()'></a>

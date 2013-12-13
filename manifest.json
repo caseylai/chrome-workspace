@@ -11,7 +11,9 @@
 		"tabs",
 		"notifications",
 		"webRequest",
-		"*://*.163.com/"],
+		"*://*.163.com/",
+		"*://*.baidu.com/",
+		"*://*.sina.com.cn/"],
 	"web_accessible_resources": [],
 	"content_security_policy": "script-src 'unsafe-eval'; object-src 'self';"
 }

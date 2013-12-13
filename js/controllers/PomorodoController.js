@@ -15,7 +15,8 @@ define(['controllers/controllers'], function(controllers) {
 			goal: '',
 			count: 1
 		};
-		$scope.config = angular.extend(angular.copy(DEFAULT_CONFIG), $scope.workspace.settings.pomorodo || {});
+		$scope.config = {};
+		angular.extend($scope.config, angular.copy(DEFAULT_CONFIG), $scope.workspace.settings.pomorodo || {});
 
 		$scope.showConfig = false;
 		$scope.status = '已停止';
@@ -27,6 +28,10 @@ define(['controllers/controllers'], function(controllers) {
 		$scope.resetConfig = function() {
 			$scope.config = $scope.workspace.settings.pomorodo = angular.copy(DEFAULT_CONFIG);
 		};
+
+		$scope.saveConfig = function() {
+			$scope.workspace.settings.pomorodo = $scope.config;
+		}
 
 		$scope.workloadStat = function() {
 			var workTime = $scope.pomorodo.count * $scope.config.eachPomorodoTime;
@@ -216,6 +221,7 @@ define(['controllers/controllers'], function(controllers) {
 			if ($scope.config.enablePopupNotification && webkitNotifications.checkPermission() != 0) {
 				webkitNotifications.requestPermission();
 			}
+			$scope.saveConfig();
 		}
 
 		if ($scope.pomorodo) {
