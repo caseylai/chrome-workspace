@@ -5,6 +5,7 @@
 body {
 	font:14px 'Segoe UI','宋体';
 	color:#333;
+	overflow:hidden;
 }
 
 a {
@@ -26,6 +27,9 @@ a.close:hover {
 a.close.sm {
 	font-size:14px;
 }
+a.danger:hover {
+	color:red;
+}
 a.icon {
 	padding:5px;
 	width:26px;
@@ -45,6 +49,10 @@ a.icon-config {
 h4 {
 	font-family:'Microsoft Yahei';
 	font-weight:normal;
+}
+h4 small {
+	font:12px '宋体';
+	margin-left:15px;
 }
 
 ul {
@@ -83,6 +91,9 @@ button {
 	border:solid 1px #999;
 	transition:background-color .3s;
 }
+button:hover {
+	background-color:#ccc;
+}
 button.primary {
 	background-color:#08c;
 	color:white;
@@ -115,6 +126,9 @@ label span.help {
 }
 
 
+.red {color:red;}
+.green {color:green;}
+.normal {color:#333;}
 
 .left {float:left;}
 .right {float:right;}
@@ -228,6 +242,9 @@ label span.help {
 }
 .icon-rss {
 	background-image:url(../images/icon-rss.png);
+}
+.icon-stock {
+	background-image:url(../images/icon-stock.png);
 }
 a.fileSelector {
 	overflow:hidden;
@@ -399,8 +416,12 @@ a.fileSelector input[type='file'] {
 }
 #news-dialog .news-rss-list {
 	width:80px;
-	border-right:solid 1px #666;
+	max-height:420px;
+	overflow-y:scroll;
 }
+#news-dialog .news-rss-list::-webkit-scrollbar-track-piece{background-color:#fff;}
+#news-dialog .news-rss-list::-webkit-scrollbar{width:5px;}
+#news-dialog .news-rss-list::-webkit-scrollbar-thumb{background:#999;}
 #news-dialog .news-rss-list li a {
 	display:block;
 	padding:10px 0;
@@ -411,7 +432,7 @@ a.fileSelector input[type='file'] {
 	cursor:text;
 }
 #news-dialog .news-list {
-	margin-left:110px;
+	margin-left:100px;
 	max-height:420px;
 	overflow-y:auto;
 }
@@ -437,7 +458,7 @@ a.fileSelector input[type='file'] {
 }
 #news-dialog .news-list::-webkit-scrollbar-track-piece{background-color:#fff;}
 #news-dialog .news-list::-webkit-scrollbar{width:5px;}
-#news-dialog .news-list::-webkit-scrollbar-thumb{background:#08c;}
+#news-dialog .news-list::-webkit-scrollbar-thumb{background:#999;}
 
 
 #googleSearch-dialog {
@@ -450,13 +471,82 @@ a.fileSelector input[type='file'] {
 }
 
 
+#stock-dialog {
+	font:12px 'verdana';
+	width:550px;
+}
+#stock-dialog .stock-list {
+	width:140px;
+}
+#stock-dialog .stock-list li {
+	margin:8px 0;
+	text-align:center;
+}
+#stock-dialog .stock-list li.stock {
+	cursor:pointer;
+}
+#stock-dialog .stock-list li.stock:hover {
+	color:#08c;
+}
+#stock-dialog .stock-list li.stock.selected {
+	font-weight:bold;
+	cursor:text;
+}
+#stock-dialog .stock-list li.stock.selected:hover {
+	color:#333;
+}
+#stock-dialog .stock-list li a {
+	display:block;
+	height:100%;
+}
+#stock-dialog .stock-list li:hover a {
+	background-color:rgba(0,136,204,.5);
+	color:white;
+	border-radius:3px;
+}
+#stock-dialog .stock-list li span {
+	color:#999;
+	cursor:not-allowed;
+}
+#stock-dialog .stock-data-container {
+	overflow-x:auto;
+	width:380px;
+	height:118px;
+	margin-left:10px;
+}
+#stock-dialog .stock-data-container::-webkit-scrollbar-track-piece{background-color:#fff;}
+#stock-dialog .stock-data-container::-webkit-scrollbar{height:5px;}
+#stock-dialog .stock-data-container::-webkit-scrollbar-thumb{background:#999;}
+#stock-dialog .stock-data {
+	width:560px;
+}
+#stock-dialog .stock-data tr {
+	height:21px;
+}
+#stock-dialog .stock-data th {
+	text-align:left;
+	font-weight:normal;
+}
+#stock-dialog .stock-data td {
+	padding-right:10px;
+}
+#stock-dialog .update-time {
+	margin-top:18px;
+}
+#stock-dialog .operation-container {
+	margin-top:10px;
+}
+#stock-dialog .operation-container form {
+	display:inline;
+	margin-right:18px;
+}
 
 
 #icon-button-container {
 	position:absolute;
 	z-index:100;
 	left:50%;
-	bottom:10px;
+	bottom:20px;
 }
 #icon-buttons {
 	position:relative;
@@ -468,8 +558,8 @@ a.fileSelector input[type='file'] {
 }
 #icon-buttons li a {
 	display:block;
-	width:48px;
-	height:48px;
+	width:32px;
+	height:32px;
 	background-repeat:no-repeat;
 	background-position:center center;
 	opacity:.4;

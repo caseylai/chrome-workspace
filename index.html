@@ -196,6 +196,87 @@
 		</div>
 	</div>
 
+	<div id='stock-dialog' class='dialog out' ng-controller='StockController' setting='stock' ng-show='getSetting("stock", "visible")'>
+		<div class='dialog-header' draggable='#stock-dialog'>
+			<h4>
+				证券行情
+				<small title='{{"成交量：" + ((indices[0].amount / 10000) | number:"0") + "亿"}}'>
+					沪：<span class={{selectColor(indices[0].risingAmount)}} ng-bind='indices[0].price + ", " + indices[0].risingPercent'></span>
+				</small>
+				<small title='{{"成交量：" + ((indices[1].amount / 10000) | number:"0") + "亿"}}'>
+					深：<span class={{selectColor(indices[1].risingAmount)}} ng-bind='indices[1].price + ", " + indices[1].risingPercent'></span>
+				</small>
+				<small title='{{"成交量：" + ((indices[2].amount / 10000) | number:"0") + "亿"}}'>
+					创业：<span class={{selectColor(indices[2].risingAmount)}} ng-bind='indices[2].price + ", " + indices[2].risingPercent'></span>
+				</small>
+			</h4>
+			<a href='javascript:;' class='close' title='关闭' ng-click='addSetting("stock", "visible", false);'>&times;</a>
+		</div>
+		<div class='dialog-body clearfix'>
+			<ul class='stock-list left'>
+				<li>
+					<a href='javascript:;' title='上一页' ng-click='prevPage()' ng-show='pageIndex > 0'>▲</a>
+					<span title='没有上一页了' ng-show='pageIndex == 0'>▲</span>
+				</li>
+				<li class='stock' ng-class='{selected: selectedStockIndex - pageIndex * VISIBLE_SNAPSHOT_COUNT == $index}' ng-repeat='s in visibleSnapshot' ng-bind='s.name + "（" + s.code + "）"' ng-click='selectStock($index)'></li>
+				<li>
+					<a href='javascript:;' title='下一页' ng-click='nextPage()' ng-show='pageIndex < maxPageIndex'>▼</a>
+					<span title='没有下一页了' ng-show='pageIndex == maxPageIndex'>▼</span>
+				</li>
+			</ul>
+			<div class='stock-data-container left'>
+				<table class='stock-data'>
+					<tr>
+						<th>涨跌率</th>
+						<th>价格</th>
+						<th>今开</th>
+						<th>昨收</th>
+						<th>最高</th>
+						<th>最低</th>
+						<th>成交量</th>
+						<th>成交额</th>
+					</tr>
+					<tr ng-repeat='s in visibleSnapshot'>
+						<td ng-bind='(((s.price - s.prevClose) / s.prevClose * 100) | number:2) + "%"' class='{{selectColor(s.price - s.prevClose)}}'></td>
+						<td ng-bind='s.price' class='{{selectColor(s.price - s.prevClose)}}'></td>
+						<td ng-bind='s.open' class='{{selectColor(s.open - s.prevClose)}}'></td>
+						<td ng-bind='s.prevClose'></td>
+						<td ng-bind='s.highest' class='{{selectColor(s.highest - s.prevClose)}}'></td>
+						<td ng-bind='s.lowest' class='{{selectColor(s.lowest - s.prevClose)}}'></td>
+						<td ng-bind='((s.volume / 100) | number:0) + " 手"'></td>
+						<td ng-bind='((s.amount / 10000) | number:0) + " 万"'></td>
+					</tr>
+				</table>
+			</div>
+			<div class='update-time right' ng-bind='updateTime | date:"H:mm:ss"'></div>
+			<div class='operation-container left'>
+				<form name='addStockForm' ng-submit='addCode()'>
+					<input type='text' size='4' name='code' ng-model='code' placeholder='代码' required>
+					<button class='primary' title='添加关注股票'>+</button>
+				</form>
+				<button ng-click='display("buySellPrice")' title='查看{{snapshot[selectedStockIndex].name}}竞价' ng-disabled='! codes[selectedStockIndex]'>竞价</button>
+				<button ng-click='display("minuteChart")' title='查看{{snapshot[selectedStockIndex].name}}分时图' ng-disabled='! codes[selectedStockIndex]'>分时</button>
+				<button ng-click='display("dailyChart")' title='查看{{snapshot[selectedStockIndex].name}}日K线' ng-disabled='! codes[selectedStockIndex]'>日K</button>
+				<button ng-click='display("weeklyChart")' title='查看{{snapshot[selectedStockIndex].name}}周K线' ng-disabled='! codes[selectedStockIndex]'>周K</button>
+				<button ng-click='display("monthlyChart")' title='查看{{snapshot[selectedStockIndex].name}}月K线' ng-disabled='! codes[selectedStockIndex]'>月K</button>
+				<button class='danger' title='删除{{snapshot[selectedStockIndex].name}}' ng-disabled='! codes[selectedStockIndex]'>删除</button>
+			</div>
+		</div>
+	</div>
+
+	<div id='stock-additional-dialog' class='dialog out' ng-controller='StockAdditionalController' setting='stockAdditional' ng-show='getSetting("stockAdditional", "visible")'>
+		<div class='dialog-header' draggable='#stock-additional-dialog'>
+			<h4 ng-bind='StockService.selectedSnapshot.name'></h4>
+			<a href='javascript:;' class='close' title='关闭' ng-click='addSetting("stockAdditional", "visible", false);'>&times;</a>
+		</div>
+		<div class='dialog-body'>
+			<img ng-src='{{minuteChart}}' ng-show='display == "minuteChart"'>
+			<img ng-src='{{dailyChart}}' ng-show='display == "dailyChart"'>
+			<img ng-src='{{weeklyChart}}' ng-show='display == "weeklyChart"'>
+			<img ng-src='{{monthlyChart}}' ng-show='display == "monthlyChart"'>
+		</div>
+	</div>
+
 	<div id='icon-button-container'>
 		<ul id='icon-buttons' class='clearfix' ng-controller='ButtonListController'>
 			<li>
@@ -212,6 +293,9 @@
 			</li>
 			<li>
 				<a class='icon-rss' href='javascript:;' title='新闻RSS' ng-click='showDialog("news")'></a>
+			</li>
+			<li>
+				<a class='icon-stock' href='javascript:;' title='证券行情' ng-click='showDialog("stock")'></a>
 			</li>
 			<li>
 				<a class='icon-export' href='javascript:;' title='导出工作空间数据' ng-click='exportWorkspace()'></a>
