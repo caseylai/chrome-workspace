@@ -16,11 +16,6 @@ define(['controllers/controllers', 'services/StockService'], function(controller
 			}
 		}, true);
 
-		$scope.$watch('StockService.display', function() {
-			$scope.display = StockService.display;
-			$scope.addSetting('stockAdditional', 'visible', true);
-		});
-
 		function getChart(snapshot, period) {
 			return 'http://image2.sinajs.cn/newchart/' + period + '/n/' + StockService.standardizeCode(snapshot.code) + '.gif?' + Date.now();
 		}

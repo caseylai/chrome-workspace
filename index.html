@@ -264,7 +264,7 @@
 		</div>
 	</div>
 
-	<div id='stock-additional-dialog' class='dialog out' ng-controller='StockAdditionalController' setting='stockAdditional' ng-show='getSetting("stockAdditional", "visible")'>
+	<div id='stock-additional-dialog' class='dialog out' ng-controller='StockAdditionalController' setting='stockAdditional' ng-show='StockService.display'>
 		<div class='dialog-header' draggable='#stock-additional-dialog'>
 			<h4>
 				{{StockService.selectedSnapshot.name}}
@@ -289,10 +289,10 @@
 					<span ng-show='StockService.display == "monthlyChart"'>月K</span>
 				</small>
 			</h4>
-			<a href='javascript:;' class='close' title='关闭' ng-click='addSetting("stockAdditional", "visible", false);'>&times;</a>
+			<a href='javascript:;' class='close' title='关闭' ng-click='StockService.display == null'>&times;</a>
 		</div>
 		<div class='dialog-body'>
-			<div class='level5 text-center' ng-show='display == "level5"'>
+			<div class='level5 text-center' ng-show='StockService.display == "level5"'>
 				<table>
 					<caption>五档竞价</caption>
 					<tr>
@@ -362,10 +362,10 @@
 					</tr>
 				</table>
 			</div>
-			<img ng-src='{{minuteChart}}' ng-show='display == "minuteChart"'>
-			<img ng-src='{{dailyChart}}' ng-show='display == "dailyChart"'>
-			<img ng-src='{{weeklyChart}}' ng-show='display == "weeklyChart"'>
-			<img ng-src='{{monthlyChart}}' ng-show='display == "monthlyChart"'>
+			<img ng-src='{{minuteChart}}' ng-show='StockService.display == "minuteChart"'>
+			<img ng-src='{{dailyChart}}' ng-show='StockService.display == "dailyChart"'>
+			<img ng-src='{{weeklyChart}}' ng-show='StockService.display == "weeklyChart"'>
+			<img ng-src='{{monthlyChart}}' ng-show='StockService.display == "monthlyChart"'>
 		</div>
 	</div>
 

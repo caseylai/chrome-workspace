@@ -55,10 +55,6 @@ define(['controllers/controllers', 'services/StockService'], function(controller
 
 		$scope.$watch('pageIndex', setVisibleSnapshot);
 
-		$scope.$watch('StockService.display', function() {
-			$scope.addSetting('stock', 'display', StockService.display);
-		});
-
 		function selectStock(index) {
 			if (index !== undefined) {
 				$scope.selectedStockIndex = $scope.pageIndex * VISIBLE_SNAPSHOT_COUNT + index;
@@ -118,7 +114,6 @@ define(['controllers/controllers', 'services/StockService'], function(controller
 		refreshMaxPageIndex();
 		setVisibleSnapshot();
 		selectStock();
-		StockService.display = $scope.getSetting('stock', 'display', 'minuteChart');
 		if ($scope.snapshot.length) {
 			StockService.selectedSnapshot = $scope.snapshot[$scope.selectedStockIndex];
 		}

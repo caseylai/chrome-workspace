@@ -96,7 +96,7 @@ define(['services/services'], function(services) {
 
 			selectedSnapshot: null,
 
-			display: 'minuteChart',
+			display: null,
 
 			isSH: isSH,
 
