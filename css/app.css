@@ -473,7 +473,7 @@ a.fileSelector input[type='file'] {
 
 #stock-dialog {
 	font:12px 'verdana';
-	width:550px;
+	width:565px;
 }
 #stock-dialog .stock-list {
 	width:140px;
@@ -539,6 +539,22 @@ a.fileSelector input[type='file'] {
 #stock-dialog .operation-container form {
 	display:inline;
 	margin-right:18px;
+}
+
+#stock-additional-dialog .level5 table {
+	margin:0 auto;
+}
+#stock-additional-dialog .level5 table caption {
+	font:16px 'Microsoft Yahei';
+	margin:10px 0;
+	letter-spacing:5px;
+}
+#stock-additional-dialog .level5 table .current-price td {
+	padding:10px 15px;
+}
+#stock-additional-dialog .level5 table td {
+	padding:2px 15px;
+	text-align:left;
 }
 
 

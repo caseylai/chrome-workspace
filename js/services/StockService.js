@@ -140,6 +140,10 @@ define(['services/services'], function(services) {
 					});
 
 				return deferred.promise;
+			},
+
+			selectColor: function(exp) {
+				return exp > 0 ? "red" : exp < 0 ? "green" : "normal";
 			}
 
 		};

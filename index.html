@@ -201,13 +201,13 @@
 			<h4>
 				证券行情
 				<small title='{{"成交量：" + ((indices[0].amount / 10000) | number:"0") + "亿"}}'>
-					沪：<span class={{selectColor(indices[0].risingAmount)}} ng-bind='indices[0].price + ", " + indices[0].risingPercent'></span>
+					沪：<span class={{StockService.selectColor(indices[0].risingAmount)}} ng-bind='indices[0].price + ", " + indices[0].risingPercent'></span>
 				</small>
 				<small title='{{"成交量：" + ((indices[1].amount / 10000) | number:"0") + "亿"}}'>
-					深：<span class={{selectColor(indices[1].risingAmount)}} ng-bind='indices[1].price + ", " + indices[1].risingPercent'></span>
+					深：<span class={{StockService.selectColor(indices[1].risingAmount)}} ng-bind='indices[1].price + ", " + indices[1].risingPercent'></span>
 				</small>
 				<small title='{{"成交量：" + ((indices[2].amount / 10000) | number:"0") + "亿"}}'>
-					创业：<span class={{selectColor(indices[2].risingAmount)}} ng-bind='indices[2].price + ", " + indices[2].risingPercent'></span>
+					创业：<span class={{StockService.selectColor(indices[2].risingAmount)}} ng-bind='indices[2].price + ", " + indices[2].risingPercent'></span>
 				</small>
 			</h4>
 			<a href='javascript:;' class='close' title='关闭' ng-click='addSetting("stock", "visible", false);'>&times;</a>
@@ -237,12 +237,12 @@
 						<th>成交额</th>
 					</tr>
 					<tr ng-repeat='s in visibleSnapshot'>
-						<td ng-bind='(((s.price - s.prevClose) / s.prevClose * 100) | number:2) + "%"' class='{{selectColor(s.price - s.prevClose)}}'></td>
-						<td ng-bind='s.price' class='{{selectColor(s.price - s.prevClose)}}'></td>
-						<td ng-bind='s.open' class='{{selectColor(s.open - s.prevClose)}}'></td>
+						<td ng-bind='(((s.price - s.prevClose) / s.prevClose * 100) | number:2) + "%"' class='{{StockService.selectColor(s.price - s.prevClose)}}'></td>
+						<td ng-bind='s.price' class='{{StockService.selectColor(s.price - s.prevClose)}}'></td>
+						<td ng-bind='s.open' class='{{StockService.selectColor(s.open - s.prevClose)}}'></td>
 						<td ng-bind='s.prevClose'></td>
-						<td ng-bind='s.highest' class='{{selectColor(s.highest - s.prevClose)}}'></td>
-						<td ng-bind='s.lowest' class='{{selectColor(s.lowest - s.prevClose)}}'></td>
+						<td ng-bind='s.highest' class='{{StockService.selectColor(s.highest - s.prevClose)}}'></td>
+						<td ng-bind='s.lowest' class='{{StockService.selectColor(s.lowest - s.prevClose)}}'></td>
 						<td ng-bind='((s.volume / 100) | number:0) + " 手"'></td>
 						<td ng-bind='((s.amount / 10000) | number:0) + " 万"'></td>
 					</tr>
@@ -254,22 +254,114 @@
 					<input type='text' size='4' name='code' ng-model='code' placeholder='代码' required>
 					<button class='primary' title='添加关注股票'>+</button>
 				</form>
-				<button ng-click='display("buySellPrice")' title='查看{{snapshot[selectedStockIndex].name}}竞价' ng-disabled='! codes[selectedStockIndex]'>竞价</button>
-				<button ng-click='display("minuteChart")' title='查看{{snapshot[selectedStockIndex].name}}分时图' ng-disabled='! codes[selectedStockIndex]'>分时</button>
-				<button ng-click='display("dailyChart")' title='查看{{snapshot[selectedStockIndex].name}}日K线' ng-disabled='! codes[selectedStockIndex]'>日K</button>
-				<button ng-click='display("weeklyChart")' title='查看{{snapshot[selectedStockIndex].name}}周K线' ng-disabled='! codes[selectedStockIndex]'>周K</button>
-				<button ng-click='display("monthlyChart")' title='查看{{snapshot[selectedStockIndex].name}}月K线' ng-disabled='! codes[selectedStockIndex]'>月K</button>
-				<button class='danger' title='删除{{snapshot[selectedStockIndex].name}}' ng-disabled='! codes[selectedStockIndex]'>删除</button>
+				<button ng-click='StockService.display = "level5"' title='查看{{snapshot[selectedStockIndex].name}}竞价' ng-disabled='! codes[selectedStockIndex]'>竞价</button>
+				<button ng-click='StockService.display = "minuteChart"' title='查看{{snapshot[selectedStockIndex].name}}分时图' ng-disabled='! codes[selectedStockIndex]'>分时</button>
+				<button ng-click='StockService.display = "dailyChart"' title='查看{{snapshot[selectedStockIndex].name}}日K线' ng-disabled='! codes[selectedStockIndex]'>日K</button>
+				<button ng-click='StockService.display = "weeklyChart"' title='查看{{snapshot[selectedStockIndex].name}}周K线' ng-disabled='! codes[selectedStockIndex]'>周K</button>
+				<button ng-click='StockService.display = "monthlyChart"' title='查看{{snapshot[selectedStockIndex].name}}月K线' ng-disabled='! codes[selectedStockIndex]'>月K</button>
+				<button class='danger' ng-click='removeSelectedStock()' title='删除{{snapshot[selectedStockIndex].name}}' ng-disabled='! codes[selectedStockIndex]'>删除</button>
 			</div>
 		</div>
 	</div>
 
 	<div id='stock-additional-dialog' class='dialog out' ng-controller='StockAdditionalController' setting='stockAdditional' ng-show='getSetting("stockAdditional", "visible")'>
 		<div class='dialog-header' draggable='#stock-additional-dialog'>
-			<h4 ng-bind='StockService.selectedSnapshot.name'></h4>
+			<h4>
+				{{StockService.selectedSnapshot.name}}
+				<small>
+					<a href='javascript:;' ng-click='StockService.display = "level5"' ng-show='StockService.display != "level5"'>竞价</a>
+					<span ng-show='StockService.display == "level5"'>竞价</span>
+				</small>
+				<small>
+					<a href='javascript:;' ng-click='StockService.display = "minuteChart"' ng-show='StockService.display != "minuteChart"'>分时</a>
+					<span ng-show='StockService.display == "minuteChart"'>分时</span>
+				</small>
+				<small>
+					<a href='javascript:;' ng-click='StockService.display = "dailyChart"' ng-show='StockService.display != "dailyChart"'>日K</a>
+					<span ng-show='StockService.display == "dailyChart"'>日K</span>
+				</small>
+				<small>
+					<a href='javascript:;' ng-click='StockService.display = "weeklyChart"' ng-show='StockService.display != "weeklyChart"'>周K</a>
+					<span ng-show='StockService.display == "weeklyChart"'>周K</span>
+				</small>
+				<small>
+					<a href='javascript:;' ng-click='StockService.display = "monthlyChart"' ng-show='StockService.display != "monthlyChart"'>月K</a>
+					<span ng-show='StockService.display == "monthlyChart"'>月K</span>
+				</small>
+			</h4>
 			<a href='javascript:;' class='close' title='关闭' ng-click='addSetting("stockAdditional", "visible", false);'>&times;</a>
 		</div>
 		<div class='dialog-body'>
+			<div class='level5 text-center' ng-show='display == "level5"'>
+				<table>
+					<caption>五档竞价</caption>
+					<tr>
+						<td>卖五</td>
+						<td ng-bind='StockService.selectedSnapshot.s5Price' class='{{StockService.selectColor(StockService.selectedSnapshot.s5Price - StockService.selectedSnapshot.prevClose)}}'></td>
+						<td ng-bind='((StockService.selectedSnapshot.s5Vol / 100) | number:0) + " 手"'></td>
+						<td ng-bind='((StockService.selectedSnapshot.s5Price * StockService.selectedSnapshot.s5Vol / 10000) | number:1) + " 万"'></td>
+					</tr>
+					<tr>
+						<td>卖四</td>
+						<td ng-bind='StockService.selectedSnapshot.s4Price' class='{{StockService.selectColor(StockService.selectedSnapshot.s4Price - StockService.selectedSnapshot.prevClose)}}'></td>
+						<td ng-bind='((StockService.selectedSnapshot.s4Vol / 100) | number:0) + " 手"'></td>
+						<td ng-bind='((StockService.selectedSnapshot.s4Price * StockService.selectedSnapshot.s4Vol / 10000) | number:1) + " 万"'></td>
+					</tr>
+					<tr>
+						<td>卖三</td>
+						<td ng-bind='StockService.selectedSnapshot.s3Price' class='{{StockService.selectColor(StockService.selectedSnapshot.s3Price - StockService.selectedSnapshot.prevClose)}}'></td>
+						<td ng-bind='((StockService.selectedSnapshot.s3Vol / 100) | number:0) + " 手"'></td>
+						<td ng-bind='((StockService.selectedSnapshot.s3Price * StockService.selectedSnapshot.s3Vol / 10000) | number:1) + " 万"'></td>
+					</tr>
+					<tr>
+						<td>卖二</td>
+						<td ng-bind='StockService.selectedSnapshot.s2Price' class='{{StockService.selectColor(StockService.selectedSnapshot.s2Price - StockService.selectedSnapshot.prevClose)}}'></td>
+						<td ng-bind='((StockService.selectedSnapshot.s2Vol / 100) | number:0) + " 手"'></td>
+						<td ng-bind='((StockService.selectedSnapshot.s2Price * StockService.selectedSnapshot.s2Vol / 10000) | number:1) + " 万"'></td>
+					</tr>
+					<tr>
+						<td>卖一</td>
+						<td ng-bind='StockService.selectedSnapshot.s1Price' class='{{StockService.selectColor(StockService.selectedSnapshot.s1Price - StockService.selectedSnapshot.prevClose)}}'></td>
+						<td ng-bind='((StockService.selectedSnapshot.s1Vol / 100) | number:0) + " 手"'></td>
+						<td ng-bind='((StockService.selectedSnapshot.s1Price * StockService.selectedSnapshot.s1Vol / 10000) | number:1) + " 万"'></td>
+					</tr>
+					<tr class='current-price'>
+						<td>当前</td>
+						<td ng-bind='StockService.selectedSnapshot.price' class='{{StockService.selectColor(StockService.selectedSnapshot.price - StockService.selectedSnapshot.prevClose)}}'></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>买一</td>
+						<td ng-bind='StockService.selectedSnapshot.b1Price' class='{{StockService.selectColor(StockService.selectedSnapshot.b1Price - StockService.selectedSnapshot.prevClose)}}'></td>
+						<td ng-bind='((StockService.selectedSnapshot.b1Vol / 100) | number:0) + " 手"'></td>
+						<td ng-bind='((StockService.selectedSnapshot.b1Price * StockService.selectedSnapshot.b1Vol / 10000) | number:1) + " 万"'></td>
+					</tr>
+					<tr>
+						<td>买二</td>
+						<td ng-bind='StockService.selectedSnapshot.b2Price' class='{{StockService.selectColor(StockService.selectedSnapshot.b2Price - StockService.selectedSnapshot.prevClose)}}'></td>
+						<td ng-bind='((StockService.selectedSnapshot.b2Vol / 100) | number:0) + " 手"'></td>
+						<td ng-bind='((StockService.selectedSnapshot.b2Price * StockService.selectedSnapshot.b2Vol / 10000) | number:1) + " 万"'></td>
+					</tr>
+					<tr>
+						<td>买三</td>
+						<td ng-bind='StockService.selectedSnapshot.b3Price' class='{{StockService.selectColor(StockService.selectedSnapshot.b3Price - StockService.selectedSnapshot.prevClose)}}'></td>
+						<td ng-bind='((StockService.selectedSnapshot.b3Vol / 100) | number:0) + " 手"'></td>
+						<td ng-bind='((StockService.selectedSnapshot.b3Price * StockService.selectedSnapshot.b3Vol / 10000) | number:1) + " 万"'></td>
+					</tr>
+					<tr>
+						<td>买四</td>
+						<td ng-bind='StockService.selectedSnapshot.b4Price' class='{{StockService.selectColor(StockService.selectedSnapshot.b4Price - StockService.selectedSnapshot.prevClose)}}'></td>
+						<td ng-bind='((StockService.selectedSnapshot.b4Vol / 100) | number:0) + " 手"'></td>
+						<td ng-bind='((StockService.selectedSnapshot.b4Price * StockService.selectedSnapshot.b4Vol / 10000) | number:1) + " 万"'></td>
+					</tr>
+					<tr>
+						<td>买五</td>
+						<td ng-bind='StockService.selectedSnapshot.b5Price' class='{{StockService.selectColor(StockService.selectedSnapshot.b5Price - StockService.selectedSnapshot.prevClose)}}'></td>
+						<td ng-bind='((StockService.selectedSnapshot.b5Vol / 100) | number:0) + " 手"'></td>
+						<td ng-bind='((StockService.selectedSnapshot.b5Price * StockService.selectedSnapshot.b5Vol / 10000) | number:1) + " 万"'></td>
+					</tr>
+				</table>
+			</div>
 			<img ng-src='{{minuteChart}}' ng-show='display == "minuteChart"'>
 			<img ng-src='{{dailyChart}}' ng-show='display == "dailyChart"'>
 			<img ng-src='{{weeklyChart}}' ng-show='display == "weeklyChart"'>
