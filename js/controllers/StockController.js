@@ -86,9 +86,10 @@ define(['controllers/controllers', 'services/StockService'], function(controller
 							// first 3 snapshots are indices
 							$scope.indices = $scope.workspace.stock.indices = snapshot.slice(0, 3);
 							$scope.snapshot = $scope.workspace.stock.snapshot = snapshot.slice(3);
+							selectStock()
+							setVisibleSnapshot();
 							$scope.updateTime = Date.now();
 							$scope.addSetting('stock', 'updateTime', $scope.updateTime);
-							setVisibleSnapshot();
 							if (isTrading()) {
 								timer = $timeout(updateAll, 15000);
 							}
