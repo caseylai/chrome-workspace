@@ -9,7 +9,7 @@ Before you reading the following text or deciding to try out this project, I wan
 概述
 ----
 
-“Chrome 工作台” 是一个用于提高你的工作或者Chrme使用效率的插件。安装完成后，点击“打开新标签页”按钮即可使用。
+“Chrome 工作台” 是一个用于提高你的工作或者Chrome使用效率的插件。安装完成后，点击“打开新标签页”按钮即可使用。
 
 目前版本是1.0.0，提供以下功能：
 
