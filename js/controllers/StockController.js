@@ -119,9 +119,7 @@ define(['controllers/controllers', 'services/StockService'], function(controller
 			StockService.selectedSnapshot = $scope.snapshot[$scope.selectedStockIndex];
 		}
 
-		if (isTrading()) {
-			updateAll();
-		}
+		updateAll();
 
 	}]);
 

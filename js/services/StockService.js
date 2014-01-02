@@ -70,7 +70,7 @@ define(['services/services'], function(services) {
 					englishName: d[0],
 					name: d[1],
 					open: +d[2],
-					close: +d[3],
+					prevClose: +d[3],
 					highest: +d[4],
 					lowest: +d[5],
 					price: +d[6],

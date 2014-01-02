@@ -26,6 +26,9 @@ define(['controllers/controllers', 'services/XMLFetchService'], function(control
 
 
 		$scope.addRSS = function() {
+			if (! $scope.newRSSAddress && $scope.newCategory) {
+				$scope.newRSSAddress = 'http://news.baidu.com/ns?word=title:' + $scope.newCategory + '&tn=newsrss&sr=0&cl=2&rn=20&ct=0';
+			}
 			var newRSS = {
 				category: $scope.newCategory,
 				address: $scope.newRSSAddress,
