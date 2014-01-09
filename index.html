@@ -158,12 +158,12 @@
 			<div class='clearfix'>
 				<div ng-show='! news.length' ng-bind='"目前还没有RSS，请在下面的表单处添加。"'></div>
 				<ul class='news-rss-list left'>
-					<li ng-repeat='news in news' ng-class='{selected: selectedIndex == $index}'>
+					<li ng-repeat='news in news track by $index' ng-class='{selected: selectedIndex == $index}'>
 						<a href='javascript:;' ng-bind='news.category' ng-click='selectIndex($index)'></a>
 					</li>
 				</ul>
 				<ul class='news-list'>
-					<li ng-repeat='item in news[selectedIndex].items'>
+					<li ng-repeat='item in news[selectedIndex].items track by $index'>
 						<a class='text-overflow' href='{{item.link}}' title='{{item.title}}' ng-bind='item.title' target='_blank'></a>
 					</li>
 				</ul>
